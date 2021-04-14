@@ -1,0 +1,7 @@
+{
+  "name": "Generate Frames from Variants",
+  "id": "964063827564839045",
+  "api": "1.0.0",
+  "main": "dist/code.js",
+  "ui": "dist/ui.html"
+}

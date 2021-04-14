@@ -1,1 +1,1 @@
-# figma-plugin-create-frames-from-variants
+# figma-plugin-generate-frames-from-variants

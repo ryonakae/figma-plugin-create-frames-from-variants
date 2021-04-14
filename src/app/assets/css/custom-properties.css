@@ -1,0 +1,30 @@
+:root {
+  /* typography */
+  --fontFamily: inter, system-ui, sans-serif;
+  --fontSize: 11px;
+  --lineHeight: 16px;
+  --fontWeight-default: 400; /* regular */
+  --fontWeight-title: 600; /* semi bold */
+  --fontWeight-button: 500; /* medium */
+
+  /* color */
+  --color-bg: white;
+  --color-text: #333;
+  --color-border: rgba(0, 0, 0, 0.1);
+  --color-active: #18a0fb;
+  --color-segmented-control-bg: #e4e4e4;
+
+  /* radius */
+  --radius-default: 2px;
+  --radius-button: 6px;
+
+  /* spacing */
+  --spacing-default: 16px;
+  --spacing-text: 8px;
+  --spacing-list: 12px;
+  --spacing-options: 6px;
+
+  /* size */
+  --height-row-default: 40px;
+  --height-row-small: 32px;
+}
