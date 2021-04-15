@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import Store from '@/app/Store'
+import OptionNumberInput from '@/app/components/OptionNumberInput'
+import OptionTextInput from '@/app/components/OptionTextInput'
 
 const Options: React.FC = () => {
   const {
@@ -12,7 +14,6 @@ const Options: React.FC = () => {
     excludeVariants,
     setExcludeVariants
   } = Store.useContainer()
-  const isMounted = useRef(false)
 
   function setCurrentOptions(): void {
     console.log('setCurrentOptions')
@@ -45,33 +46,28 @@ const Options: React.FC = () => {
   }
 
   useEffect(() => {
-    if (!isMounted.current) {
-      isMounted.current = true
-      console.log('optios mounted')
-      console.log('getoptions')
-      parent.postMessage(
-        {
-          pluginMessage: {
-            type: 'getoptions'
-          }
-        } as Message,
-        '*'
-      )
-    }
+    console.log('optios mounted')
+    console.log('getoptions')
+    parent.postMessage(
+      {
+        pluginMessage: {
+          type: 'getoptions'
+        }
+      } as Message,
+      '*'
+    )
   }, [])
 
   useEffect(setCurrentOptions, [framesColumnGap, framesRowGap, includeVariants, excludeVariants])
 
   return (
     <div className="options">
-      <div className="options-item">
-        <div>Column Gap</div>
-        <input type="number" value={framesColumnGap} onChange={onFramesColumnGapChange} />
-      </div>
-      <div className="options-item">
-        <div>Row Gap</div>
-        <input type="number" value={framesRowGap} onChange={onFramesRowGapChange} />
-      </div>
+      <OptionNumberInput
+        title="Column Gap"
+        value={framesColumnGap}
+        onChange={onFramesColumnGapChange}
+      />
+      <OptionNumberInput title="Row Gap" value={framesRowGap} onChange={onFramesRowGapChange} />
       {/* <div className="options-item" onClick={onEditRealtimeClick}>
         <div>Display Frame Name</div>
         <div className={`segmentedControl is-${String(isEditRealtime)}`}>
