@@ -19,31 +19,36 @@ class Controller {
   }
 
   getOptions(): void {
-    const isEditRealtime = Util.toBoolean(figma.root.getPluginData('isEditRealtime'))
+    const data: Options = {
+      framesColumnGap: Number(figma.root.getPluginData('framesColumnGap')),
+      framesRowGap: Number(figma.root.getPluginData('framesRowGap')),
+      isInclude: Util.toBoolean(figma.root.getPluginData('isInclude')),
+      includeVariants: figma.root.getPluginData('includeVariants'),
+      isExclude: Util.toBoolean(figma.root.getPluginData('isExclude')),
+      excludeVariants: figma.root.getPluginData('excludeVariants')
+    }
 
     figma.ui.postMessage({
       type: 'getoptionssuccess',
-      data: {
-        isEditRealtime
-      }
+      data
     } as PluginMessage)
 
-    console.log('getOptions success', isEditRealtime)
+    console.log('getOptions success', data)
   }
 
   setOptions(options: Options): void {
-    figma.root.setPluginData('isEditRealtime', String(options.isEditRealtime))
+    figma.root.setPluginData('framesColumnGap', String(options.framesColumnGap))
+    figma.root.setPluginData('framesRowGap', String(options.framesRowGap))
+    figma.root.setPluginData('isInclude', String(options.isInclude))
+    figma.root.setPluginData('includeVariants', String(options.includeVariants))
+    figma.root.setPluginData('isExclude', String(options.isExclude))
+    figma.root.setPluginData('excludeVariants', String(options.excludeVariants))
 
     figma.ui.postMessage({
       type: 'setoptionssuccess'
     } as PluginMessage)
 
-    console.log('setOptions success', figma.root.getPluginData('isEditRealtime'))
-  }
-
-  onSelectionChange(): void {
-    const selections = figma.currentPage.selection
-    console.log('onSelectionChange', selections)
+    console.log('setOptions success')
   }
 
   expand(arr: []): [] {
@@ -219,7 +224,7 @@ function bootstrap(): void {
   figma.showUI(__html__, { width: UI_WIDTH, height: UI_MIN_HEIGHT })
 
   figma.ui.onmessage = (msg: PluginMessage): void => {
-    console.log(msg)
+    console.log('figma.ui.onmessage', msg)
 
     switch (msg.type) {
       case 'resize':
@@ -229,9 +234,7 @@ function bootstrap(): void {
         contoller.getOptions()
         break
       case 'setoptions':
-        contoller.setOptions({
-          isEditRealtime: msg.data.isEditRealtime
-        })
+        contoller.setOptions(msg.data)
         break
       case 'generate':
         contoller.generate()
@@ -243,10 +246,6 @@ function bootstrap(): void {
         break
     }
   }
-
-  figma.on('selectionchange', contoller.onSelectionChange)
-
-  contoller.onSelectionChange()
 }
 
 bootstrap()

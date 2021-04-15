@@ -2,7 +2,16 @@ import React, { useEffect, useRef } from 'react'
 import Store from '@/app/Store'
 
 const Options: React.FC = () => {
-  const { isEditRealtime, setIsEditRealtime } = Store.useContainer()
+  const {
+    framesColumnGap,
+    setFramesColumnGap,
+    framesRowGap,
+    setFramesRowGap,
+    includeVariants,
+    setIncludeVariants,
+    excludeVariants,
+    setExcludeVariants
+  } = Store.useContainer()
   const isMounted = useRef(false)
 
   function setCurrentOptions(): void {
@@ -12,7 +21,10 @@ const Options: React.FC = () => {
         pluginMessage: {
           type: 'setoptions',
           data: {
-            isEditRealtime
+            framesColumnGap,
+            framesRowGap,
+            includeVariants,
+            excludeVariants
           }
         }
       } as Message,
@@ -20,9 +32,16 @@ const Options: React.FC = () => {
     )
   }
 
-  function onEditRealtimeClick(): void {
-    console.log('onEditRealtimeClick')
-    setIsEditRealtime(!isEditRealtime)
+  function onFramesColumnGapChange(event: React.FormEvent<HTMLInputElement>): void {
+    console.log('onFramesColumnGapChange')
+    event.persist()
+    setFramesColumnGap(Number(event.currentTarget.value))
+  }
+
+  function onFramesRowGapChange(event: React.FormEvent<HTMLInputElement>): void {
+    console.log('onFramesRowGapChange')
+    event.persist()
+    setFramesRowGap(Number(event.currentTarget.value))
   }
 
   useEffect(() => {
@@ -41,19 +60,19 @@ const Options: React.FC = () => {
     }
   }, [])
 
-  useEffect(setCurrentOptions, [isEditRealtime])
+  useEffect(setCurrentOptions, [framesColumnGap, framesRowGap, includeVariants, excludeVariants])
 
   return (
     <div className="options">
-      <div className="options-item" onClick={onEditRealtimeClick}>
+      <div className="options-item">
         <div>Column Gap</div>
-        <div>100</div>
+        <input type="number" value={framesColumnGap} onChange={onFramesColumnGapChange} />
       </div>
-      <div className="options-item" onClick={onEditRealtimeClick}>
+      <div className="options-item">
         <div>Row Gap</div>
-        <div>100</div>
+        <input type="number" value={framesRowGap} onChange={onFramesRowGapChange} />
       </div>
-      <div className="options-item" onClick={onEditRealtimeClick}>
+      {/* <div className="options-item" onClick={onEditRealtimeClick}>
         <div>Display Frame Name</div>
         <div className={`segmentedControl is-${String(isEditRealtime)}`}>
           <div className="segmentedControl-segment">
@@ -78,7 +97,7 @@ const Options: React.FC = () => {
             <img src={require('@/app/assets/img/icon_check.svg').default} alt="" />
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }

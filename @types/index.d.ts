@@ -17,7 +17,12 @@ type Message = {
 }
 
 type Options = {
-  isEditRealtime: boolean
+  framesColumnGap: number
+  framesRowGap: number
+  isInclude: boolean
+  includeVariants: string
+  isExclude: boolean
+  excludeVariants: string
 }
 
 type Variant = {
