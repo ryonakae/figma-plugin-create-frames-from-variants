@@ -154,7 +154,7 @@ class Controller {
       let key = ''
 
       variants.map(variant => {
-        key += String(variant.index)
+        key = String(variant.index).padStart(4, '0')
       })
 
       framesData.push({
