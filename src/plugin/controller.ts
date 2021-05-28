@@ -206,7 +206,7 @@ class Controller {
 
     // group frames
     const group = figma.group(generatedFrames, frame.parent || figma.currentPage)
-    group.name = 'Generated Frames'
+    group.name = 'Generated Frames from Variants'
     group.x = frame.x + frame.width + FRAMES_COLUMN_GAP * 3
     group.y = frame.y
 
